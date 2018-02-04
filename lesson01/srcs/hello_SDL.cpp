@@ -3,7 +3,7 @@
  * SDL_Init lets you call on functions from the SDL lib
  * Remember to change SRC for SDL header files
  */
-#include <SDL.h>
+#include "SDL.h"
 #include <stdio.h>
 
 const int SCREEN_WIDTH = 640;
