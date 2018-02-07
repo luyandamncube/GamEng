@@ -8,6 +8,8 @@ OBJECTS = $(addprefix build/,$(FILENAMES:.cpp=.o))
 
 all:
 	g++ $(SOURCES) $(INCLUDES) $(CFLAGS) $(NAME)
+run: all
+	./hello_SDL
 clean: 
 	rm -f $(OBJECTS)
 fclean: clean
