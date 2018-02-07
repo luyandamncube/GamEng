@@ -7,9 +7,6 @@ SOURCES = $(addprefix srcs/,$(FILENAMES))
 OBJECTS = $(addprefix build/,$(FILENAMES:.cpp=.o))
 
 all:
-#g++ $(CFLAGS) $(SOURCES) $(INCLUDES) -w -lSDL2 -o $(NAME)
-#g++ $(CFLAGS) $(SOURCES) $(INCLUDES) -o $(NAME)
-
 	g++ $(SOURCES) $(INCLUDES) $(CFLAGS) $(NAME)
 clean: 
 	rm -f $(OBJECTS)
