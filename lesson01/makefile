@@ -1,13 +1,16 @@
 NAME = hello_SDL
 FILENAMES = hello_SDL.cpp
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -w -lSDL2 -o
 
 INCLUDES = -I/usr/include/SDL2
 SOURCES = $(addprefix srcs/,$(FILENAMES))
 OBJECTS = $(addprefix build/,$(FILENAMES:.cpp=.o))
 
 all:
-	g++ $(CFLAGS) $(SOURCES) $(INCLUDES) -w -lSDL2 -o $(NAME)
+#g++ $(CFLAGS) $(SOURCES) $(INCLUDES) -w -lSDL2 -o $(NAME)
+#g++ $(CFLAGS) $(SOURCES) $(INCLUDES) -o $(NAME)
+
+	g++ $(SOURCES) $(INCLUDES) $(CFLAGS) $(NAME)
 clean: 
 	rm -f $(OBJECTS)
 fclean: clean
