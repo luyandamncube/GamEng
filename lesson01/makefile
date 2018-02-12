@@ -1,5 +1,5 @@
 NAME = hello_SDL
-FILENAMES = hello_SDL.cpp
+FILENAMES = Game.cpp Main.cpp
 CFLAGS = -Wall -Wextra -Werror -w -lSDL2 -o
 
 INCLUDES = -I/usr/include/SDL2
