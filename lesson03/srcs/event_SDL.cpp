@@ -60,6 +60,7 @@ void	close()
 	gWindow = NULL;
 	SDL_FreeSurface(gPicture);
 	gPicture = NULL;
+	SDL_Quit();
 }
 
 int	main(int argc, char **argv)
@@ -68,22 +69,26 @@ int	main(int argc, char **argv)
 
 	if (!init())
 		printf("Failed to initialise! %s\n");
-	else if (!loadmedia)
-		printf("Failed to load media! %s\n");
 	else
-	{
-		//Main loop, waits for user to exit to execute close();
-		while (!quit)
+	{	 if (!loadmedia())
+		printf("Failed to load media! %s\n");
+		else
 		{
-			while (SDL_PollEvent(&eHandler))
+		//Main loop, waits for user to exit to execute close();
+			while (!quit)
 			{
-				if (eHandler.type == SDL_QUIT)
-					quit = true;
-			}
+				while (SDL_PollEvent(&eHandler) != 0 )
+				{
+					if (eHandler.type == SDL_QUIT)
+						quit = true;
+				}
 
-			SDL_BlitSurface(gPicture, NULL, gBackground, NULL);
-			SDL_UpdateWindowSurface(gWindow);
+				SDL_BlitSurface(gPicture, NULL, gBackground, NULL);
+				SDL_UpdateWindowSurface(gWindow);
+			}
 		}
 	}
 	close();
+	
+	return (0);
 }

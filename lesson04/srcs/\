@@ -110,7 +110,6 @@ void close()
 	gWindow = NULL;
 	SDL_FreeSurface(gBackground);
 	gBackground = NULL;
-	SDL_Quit();
 }
 
 int	main(int argc, char **argv)
@@ -121,46 +120,40 @@ int	main(int argc, char **argv)
 
 	if (!init())
 		printf("Failed to initialise! %s\n");
-	else 
+	else if (!loadMedia())
+		printf("Failed to load media! %s\n");
+	else
 	{
-		if (!loadMedia())
-			printf("Failed to load media! %s\n");
-		else
+		while (!quit)
 		{
-			
-			SDL_BlitSurface(gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT], NULL, gBackground, NULL);
-			SDL_UpdateWindowSurface(gWindow);
-			while (!quit)
+			while (SDL_PollEvent(&eHandler))
 			{
-				while (SDL_PollEvent(&eHandler))
+				if (eHandler.type == SDL_QUIT)
+					quit = true;
+				else if (eHandler.type == SDL_KEYDOWN)
 				{
-					if (eHandler.type == SDL_QUIT)
-						quit = true;
-					else if (eHandler.type == SDL_KEYDOWN)
-					{
-						switch(eHandler.key.keysym.sym)
-				 		{ 
-							case SDLK_UP: 
-							gCurrent = gKeyPressSurfaces[KEY_PRESS_SURFACE_UP]; 
-							break; 
-							case SDLK_DOWN: 
-							gCurrent = gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN]; 
-							break; 
-							case SDLK_LEFT: 
-							gCurrent = gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT]; 
-							break; 
-							case SDLK_RIGHT: 
-							gCurrent = gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT]; 
-							break; 
-							default: 
-							gCurrent = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT]; 
-							break; 
-				 		}
-					}	
-					SDL_BlitSurface(gCurrent, NULL, gBackground, NULL);
-					SDL_UpdateWindowSurface(gWindow);
+					switch(eHandler.key.keysym.sym)
+				 	{ 
+						case SDLK_UP: 
+						gCurrent = gKeyPressSurfaces[KEY_PRESS_SURFACE_UP]; 
+						break; 
+						case SDLK_DOWN: 
+						gCurrent = gKeyPressSurfaces[KEY_PRESS_SURFACE_DOWN]; 
+						break; 
+						case SDLK_LEFT: 
+						gCurrent = gKeyPressSurfaces[KEY_PRESS_SURFACE_LEFT]; 
+						break; 
+						case SDLK_RIGHT: 
+						gCurrent = gKeyPressSurfaces[KEY_PRESS_SURFACE_RIGHT]; 
+				 		break; 
+						default: 
+						gCurrent = gKeyPressSurfaces[KEY_PRESS_SURFACE_DEFAULT]; 
+						break; 
+				 	}
 				}	
-			}
+			}	
+			SDL_BlitSurface(gCurrent, NULL, gBackground, NULL);
+			SDL_UpdateWindowSurface(gWindow);
 		}
 	}
 	close();
