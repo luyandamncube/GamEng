@@ -1,16 +1,22 @@
 /************************************ 
-* File Name : Main.cpp
-* Creation Date : 13-02-2018
-* Created By 	: lmncube
-* https://github.com/luyandamncube
-************************************/
+ * File Name : Main.cpp
+ * Creation Date : 13-02-2018
+ * Created By 	: lmncube
+ * https://github.com/luyandamncube
+ ************************************/
 
 #include "Game.h"
 
 int main(int argc, char **argv)
 {
 	Game Game;
-	Game.run();
-	Game.loadmedia();
-	Game.closeSDL();	
+	if (!Game.init())
+		printf("Failed to initialise!\n");
+	else
+	{
+		if (!Game.loadmedia())
+			printf("Failed to load media!\n");
+	}
+	Game.closeSDL();
+	return (0);
 }

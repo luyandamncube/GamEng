@@ -10,5 +10,7 @@
 int main(int argc, char **argv)
 {
 	Game Game;
-	Game.run();
+	if (!Game.init())
+		printf("Failed to initialise!\n");
+	return (0);
 }

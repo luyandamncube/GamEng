@@ -7,7 +7,6 @@
 
 #include "Game.h"
 #include <stdio.h>
-//#include <GL.h> for when we provide openGL support
 
 Game::Game()
 {
@@ -20,43 +19,47 @@ Game::~Game()
 {
 }
 
-//Function to load an image with the path as a parameter. Returns a pointer to the new surface
-void Game::init()
+bool Game::init()
 {
+	bool result = true;
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+	{
 		printf("SDL could not initialise! SDL_Error: %s\n", SDL_GetError());
+		result = false;
+	}
 	else
 	{
 		window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (window == NULL)
+		{
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			result = false;
+		}
                 else 
                         surface = SDL_GetWindowSurface(window);
 	}
+	return (result);
 }
 
-void Game::run()
+bool Game::loadmedia()
 {
-	init();
-}
-
-void Game::loadmedia()
-{
+	bool result = true;
 	picture = SDL_LoadBMP("srcs/image01.bmp");
 	if (picture == NULL)
+	{
 		printf("Could not load picture!: SDL_Error %s\n", SDL_GetError());
+		result = false;
+	}
         else
 	{
-		//Blit/Copy source image to destination
 		SDL_BlitSurface(picture, NULL, surface, NULL);
         	SDL_UpdateWindowSurface(window);
         	SDL_Delay(2000);
 		closeSDL();
 	}
-
+	return (result);
 }
 
-//Overload function name close() for the purposes of this project
 void Game::closeSDL()
 {
         SDL_DestroyWindow(window);
@@ -65,4 +68,3 @@ void Game::closeSDL()
         picture = NULL;
         SDL_Quit();
 }
-

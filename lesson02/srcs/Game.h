@@ -15,9 +15,8 @@ class Game
 	public: 
 		Game();
 		~Game();
-		void init();
-		void run();
-		void loadmedia();
+		bool init();
+		bool loadmedia();
 		void closeSDL();
 	
 	private:

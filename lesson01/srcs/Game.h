@@ -15,8 +15,7 @@ class Game
 	public: 
 		Game();
 		~Game();
-		void run();
-		void init();
+		bool init();
 
 	private:
 		SDL_Window *window;
