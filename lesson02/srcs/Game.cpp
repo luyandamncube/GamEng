@@ -44,7 +44,7 @@ bool Game::init()
 bool Game::loadmedia()
 {
 	bool result = true;
-	picture = SDL_LoadBMP("srcs/image01.bmp");
+	picture = SDL_LoadBMP("img/image01.bmp");
 	if (picture == NULL)
 	{
 		printf("Could not load picture!: SDL_Error %s\n", SDL_GetError());

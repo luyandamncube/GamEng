@@ -1,17 +1,17 @@
-NAME = keypress_SDL
-FILENAMES = keypress_SDL.cpp
-CFLAGS = -Wall -Werror -Wextra -w -lSDL2 -o
+NAME = event_SDL
+FILENAMES = Game.cpp Main.cpp
+CFLAGS = -Wall -Wextra -Werror -w -lSDL2 -o
 
 INCLUDES = -I/usr/include/SDL2
-SOURCES = $(addprefix srcs/, $(FILENAMES))
-OBJECTS = $(addprefix build/, $(FILENAMES:.cpp=.o))
+SOURCES = $(addprefix srcs/,$(FILENAMES))
+OBJECTS = $(addprefix build/,$(FILENAMES:.cpp=.o))
 
-all: 
+all:
 	g++ $(SOURCES) $(INCLUDES) $(CFLAGS) $(NAME)
-run:	all
-	./keypress_SDL
-clean:
+run: all
+	./event_SDL
+clean: 
 	rm -f $(OBJECTS)
-fclean: clean 
+fclean: clean
 	rm -f $(NAME)
-re:	flcean all
+re:	fclean all
