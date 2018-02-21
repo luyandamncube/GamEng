@@ -6,7 +6,7 @@ The purpose of this was to design a simple game engine using C++ & SDL2 to build
 To install and use SDL on  your local machine:
 
 1. Enter terminal and type `sudo apt-get install libsdl2-dev`
-2. In compilation use the flags `-w lSDL2` (i.e. `g++ file.cpp -w -lSDL -o file.o`)
+2. In compilation use the flags `-w lSDL2`
 *`-w`              supresses all warnings
 *`-lSDL2`          specifies libraries we're linking against, i.e. SDL2
 
