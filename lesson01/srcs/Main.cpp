@@ -1,9 +1,10 @@
-/************************************ 
-* File Name : Main.cpp
-* Creation Date : 13-02-2018
-* Created By 	: lmncube
-* https://github.com/luyandamncube
-************************************/
+/**************************************************
+ * File Name : Main.cpp
+ * Creation Date : 13-02-2018
+ * Last Modified : Wed 21 Feb 2018 10:52:39 AM SAST
+ * Created By :		lmncube
+ * https://github.com/luyandamncube
+ **************************************************/
 
 #include "Game.h"
 

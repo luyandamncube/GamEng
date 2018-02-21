@@ -1,17 +1,75 @@
-NAME = hello_SDL
-FILENAMES = Game.cpp Main.cpp
-CFLAGS = -Wall -Wextra -Werror -w -lSDL2 -o
+###################################################################### 
+#								     #	
+#           ██╗     ███████╗███╗   ███╗ ██████╗ ███╗   ██╗	     #
+#  	    ██║     ██╔════╝████╗ ████║██╔═══██╗████╗  ██║	     #
+#  	    ██║     █████╗  ██╔████╔██║██║   ██║██╔██╗ ██║	     #
+#           ██║     ██╔══╝  ██║╚██╔╝██║██║   ██║██║╚██╗██║	     #
+#  	    ███████╗███████╗██║ ╚═╝ ██║╚██████╔╝██║ ╚████║	     #
+#  	    ╚══════╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝	     #
+#				MAKEFILE			     #
+#	CREATED BY:	lmncube					     #
+#	https://github.com/lmncube				     #
+#								     #
+###################################################################### 
 
-INCLUDES = -I/usr/include/SDL2
-SOURCES = $(addprefix srcs/,$(FILENAMES))
-OBJECTS = $(addprefix build/,$(FILENAMES:.cpp=.o))
+#############################  MACROS  ###############################
+#								     #
+#	patsubst is a pattern matcher, where % is the wildcard	     #
+#	$(patsubst pattern,replacement pattern,text)		     #
+#	DEPS sets directory for header file dependancies	     #	
+#	LDIR set directory for external libraries		     #
+#	ODIR is the .o file temp directory			     #
+#								     #
+##############################  MACROS  ##############################
 
-all:
-	g++ $(SOURCES) $(INCLUDES) $(CFLAGS) $(NAME)
-run: all
-	./hello_SDL
-clean: 
-	rm -f $(OBJECTS)
+NAME = 			hello_SDL
+FILENAMES = 		Game.cpp Main.cpp
+CC =			g++
+
+CFLAGS = 		-Wall -Werror -Wextra -w -lSDL2
+HFLAGS =		-I$(HDIR)
+IFLAGS =		-I/usr/include/SDL2
+
+HDIR =			./includes
+ODIR =			obj
+SDIR = 			srcs
+
+_DEPS =			Game.h
+DEPS =			$(patsubst %,$(HDIR)/%,$(_DEPS))	        
+_OBJ = 			$(FILENAMES:.cpp=.o)  		        
+ OBJ = 			$(patsubst %,$(ODIR)/%,$(_OBJ))
+SRCS = 			$(patsubst %,$(SDIR)/%,$(FILENAMES))
+
+##############################  TARGETS  ############################## 
+#								      # 
+#	Using % instead of * allows us to refer to MULTIPLE targets   #
+#       -c flag generates object file			      	      #
+#       -o $@ puts output in file named LEFT of :		      #
+#       $@ is the LEFT of :				      	      #
+#       $^ is the RIGHT of :					      #
+#       $< is the first item on the dependencies list	      	      #
+#								      #
+##############################  TARGETS  ##############################
+
+all: $(NAME)
+
+$(ODIR)/%.o: $(SDIR)/%.cpp $(DEPS)
+			$(CC) $< $(HFLAGS) $(IFLAGS) $(CFLAGS) -c -o $@  
+$(NAME): $(OBJ)
+	@echo		Object files generated!
+	@echo 		Compiling library...
+			$(CC) $^ $(HFLAGS) $(IFLAGS) $(CFLAGS) -o $@ 
+	@echo		Done! Type \"make run\" to run executable
+run:
+	@echo 		Running program excecutable...
+			@./hello_SDL
+clean:
+	@echo 		Cleaning object files...
+			@rm -f $(OBJ)
 fclean: clean
-	rm -f $(NAME)
-re:	fclean all
+	@echo 		Cleaning program excecutable...
+			@rm -f $(NAME)
+	@echo		Done!
+re: 	fclean all
+
+.PHONY: all clean fclean re

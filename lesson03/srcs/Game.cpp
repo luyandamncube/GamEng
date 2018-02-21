@@ -7,6 +7,7 @@
 
 #include "Game.h"
 #include <stdio.h>
+#include <SDL.h>
 
 Game::Game()
 {

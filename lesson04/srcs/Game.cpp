@@ -1,6 +1,6 @@
 /************************************ 
- * File Name : Game.cpp
-* Creation Date : 13-02-2018
+* File Name : Game.cpp
+* Creation Date : 16-02-2018
 * Created By 	: lmncube
 * https://github.com/luyandamncube
 ************************************/
@@ -56,7 +56,7 @@ void Game::loadimages (int keypress, char *path)
 {
 	arrsurface[keypress] = loadsurface(path);
 	if (arrsurface[keypress] == NULL)
-		printf("Failed to load image! %s\n");
+		printf("Failed to load images to surfaces! %s\n");
 }
 
 bool Game::loadmedia()
