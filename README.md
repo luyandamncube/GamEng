@@ -9,6 +9,7 @@ To install and use SDL on  your local machine:
 2. In compilation use the flags `-w lSDL2`
 
 `-w`              supresses all warnings
+
 `-lSDL2`          specifies libraries we're linking against, i.e. SDL2
 
 All Projects/lessons compile using `make`
