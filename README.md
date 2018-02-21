@@ -7,8 +7,9 @@ To install and use SDL on  your local machine:
 
 1. Enter terminal and type `sudo apt-get install libsdl2-dev`
 2. In compilation use the flags `-w lSDL2`
-*`-w`              supresses all warnings
-*`-lSDL2`          specifies libraries we're linking against, i.e. SDL2
+
+`-w`              supresses all warnings
+`-lSDL2`          specifies libraries we're linking against, i.e. SDL2
 
 All Projects/lessons compile using `make`
 
