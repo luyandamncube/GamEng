@@ -12,9 +12,11 @@ To install and use SDL on  your local machine:
 
 `-lSDL2`          specifies libraries we're linking against, i.e. SDL2
 
-All Projects/lessons compile using `make`
+
 
 ## Makefile commands
+
+All Projects/lessons compile using `make`
 
 `make` / `make all`    Compiles all source files into object code and then links to executable
 
