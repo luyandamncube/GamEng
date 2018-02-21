@@ -14,9 +14,7 @@ To install and use SDL on  your local machine:
 
 All Projects/lessons compile using `make`
 
----
-
-#### Makefile commands
+## Makefile commands
 
 `make` / `make all`    Compiles all source files into object code and then links to executable
 
