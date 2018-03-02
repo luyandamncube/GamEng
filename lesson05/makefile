@@ -22,12 +22,11 @@
 #								     #
 ##############################  MACROS  ##############################
 
-NAME = 			keypress_SDL
+NAME = 			render_SDL
 FILENAMES = 		Game.cpp Main.cpp
 CC =			g++
 
-CFLAGS = 		-Wall -Werror -Wextra -w
-LFLAGS =		-lSDL2
+CFLAGS = 		-Wall -Werror -Wextra -w -lSDL2
 HFLAGS =		-I$(HDIR)
 IFLAGS =		-I/usr/include/SDL2
 
@@ -55,15 +54,15 @@ SRCS = 			$(patsubst %,$(SDIR)/%,$(FILENAMES))
 all: $(NAME)
 
 $(ODIR)/%.o: $(SDIR)/%.cpp $(DEPS)
-			$(CC) $< $(HFLAGS) $(IFLAGS) $(CFLAGS) $(LFLAGS) -c -o $@  
+			$(CC) $< $(HFLAGS) $(IFLAGS) $(CFLAGS) -c -o $@  
 $(NAME): $(OBJ)
 	@echo		Object files generated!
 	@echo 		Compiling library...
-			$(CC) $^ $(HFLAGS) $(IFLAGS) $(CFLAGS) $(LFLAGS) -o $@ 
+			$(CC) $^ $(HFLAGS) $(IFLAGS) $(CFLAGS) -o $@ 
 	@echo		Done! Type \"make run\" to run executable
 run:
 	@echo 		Running program excecutable...
-			@./keypress_SDL
+			@./render_SDL
 clean:
 	@echo 		Cleaning object files...
 			@rm -f $(OBJ)
