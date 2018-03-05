@@ -1,7 +1,7 @@
 # SDL
 An intro to Simple Directmedia Layer for C++ Game Development
 
-The purpose of this was to design a simple game engine using C++ & SDL2 to build simple 2D games on top of
+The purpose of this project was to design a simple game engine using C++ & SDL2 to build simple 2D games on top of
 
 To install and use SDL on  your local machine (OSX/Linux):
 
