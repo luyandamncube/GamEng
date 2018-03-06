@@ -1,4 +1,4 @@
-# SDL
+# GamEng
 An intro to Simple Directmedia Layer for C++ Game Development
 
 The purpose of this project was to design a simple game engine using C++ & SDL2 to build simple 2D games on top of
