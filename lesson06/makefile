@@ -22,12 +22,14 @@
 #								     #
 ##############################  MACROS  ##############################
 
-NAME = 			render_SDL
+NAME = 			textures_SDL
 FILENAMES = 		Game.cpp Main.cpp
 CC =			g++
 
+#added the -lSDL2_image linker flags for png files
+#using -lSDL_image is depracted, this is why we need -lSDL2_image instead
 CFLAGS = 		-Wall -Werror -Wextra -w
-LFLAGS = 		-lSDL2
+LFLAGS = 		-lSDL2 -lSDL2_image
 HFLAGS =		-I$(HDIR)
 IFLAGS =		-I/usr/include/SDL2
 
@@ -63,7 +65,7 @@ $(NAME): $(OBJ)
 	@echo		Done! Type \"make run\" to run executable
 run:
 	@echo 		Running program excecutable...
-			@./render_SDL
+			@./textures_SDL
 clean:
 	@echo 		Cleaning object files...
 			@rm -f $(OBJ)
