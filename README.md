@@ -1,18 +1,14 @@
-# SDL
+# GamEng
 An intro to Simple Directmedia Layer for C++ Game Development
 
-The purpose of this was to design a simple game engine using C++ & SDL2 to build simple 2D games on top of
+The purpose of this project was to design a simple game engine using C++ & SDL2 to build simple 2D games on top of
 
-To install and use SDL on  your local machine:
+To install and use SDL on  your local machine (OSX/Linux):
 
-1. Enter terminal and type `sudo apt-get install libsdl2-dev`
-2. In compilation use the flags `-w lSDL2`
-
-`-w`              supresses all warnings
-
-`-lSDL2`          specifies libraries we're linking against, i.e. SDL2
-
-
+1. Install SDL:  `sudo apt-get install libsdl2-dev`
+2. Install SDL_image:  `sudo apt-get install libsdl2-image-dev`
+3. Install SDL_ttf:  `sudo apt-get install libsdl2-ttf-dev`
+4. Install SDL_mixer:  `sudo apt-get install libsdl2-mixer-dev`
 
 ## Makefile commands
 
