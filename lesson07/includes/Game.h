@@ -1,7 +1,7 @@
 /**************************************************
  * File Name : Game.h
- * Creation Date : 02-03-2018
- * Last Modified : Thu 08 Mar 2018 02:40:28 PM SAST
+ * Creation Date : 08-03-2018
+ * Last Modified : Thu 08 Mar 2018 03:12:50 PM SAST
  * Created By :		lmncube
  * https://github.com/luyandamncube
  **************************************************/
@@ -11,8 +11,6 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-
-//SDL_Rect srcR, destR;
 
 class Game
 {
@@ -27,20 +25,26 @@ class Game
 	private:
 		void gameloop();
 		void eventhandler();
-		//Handles on-screen changes i.e. movement of objects
 		void update();
-		//Handles our object rendering
 		void render();
 		
 		const int SCREEN_WIDTH = 640;
 		const int SCREEN_HEIGHT = 480;
 		enum Gamestate{PLAY,EXIT};
-		//Counter for update function & player movement
-		int i = 0; 
+		int i = 0;
+	       	/* Variables for capping our framerate
+		 * FPS: is the FPS to match our own screen's refrsh rate 
+		 * framedelay: how long a frame should take / Time between frames
+		 * framestart: how long our game has been running
+		 * frametime: how long time takes to handle events, update and render (in gameloop) 
+		 */
+		const int FPS = 60;	
+		const int framedelay = 1000/FPS;
+		unsigned int framestart;
+		int frametime;
 
 		Gamestate currentstate;
 		SDL_Window  *window;
-		//changed display method to rendering, blitting images raw uses too many resources
 		SDL_Renderer *renderer;
 		SDL_Texture *player1;
 		SDL_Texture *loadtexture(char *path);

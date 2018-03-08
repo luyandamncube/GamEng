@@ -1,18 +1,13 @@
 /**************************************************
  * File Name : Game.cpp
  * Creation Date : 02-03-2018
- * Last Modified : Thu 08 Mar 2018 02:39:01 PM SAST
+ * Last Modified : Thu 08 Mar 2018 03:15:45 PM SAST
  * Created By :		lmncube
  * https://github.com/luyandamncube
  **************************************************/
 
 #include "Game.h"
 #include <stdio.h>
-
-/*SDL_Rect is a simple sturct SDL_Rect destR = {x,y,h,w}
- * Usage destR.x = 0
- * This should all be done in an object class, we are making it global for demonstrative purposes 
- */
 
 SDL_Rect srcR, destR;
 
@@ -45,11 +40,6 @@ bool Game::init()
 			result = false; 
 		}
 		else
-			/* Create 2D rendering context for our window (window, index, flags)
-			 * index: index of rendering driver. -1 initialises the first one
-			 * flags: four different flags or 0 for none. SDL_RENDERER_ACCELERATED lets renderer use hardware acceleration
-			 * we can use multiple flags in this parameter using "|", (ex. SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC) 
-			 */
 			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 		if (renderer == NULL)
 		{
@@ -82,18 +72,8 @@ bool Game::loadmedia()
 
 void Game::render()
 {
-	
-	//Clear render buffer
 	SDL_RenderClear(renderer);
-
-	/* Painter's Algorithm: load background -> load textures -> load objects
-	 * RenderCopy: render a texture to screen (renderer, texture, how much of image to draw, how much of frame to fill)
-	 * 1st NULL draws entire image, 2nd NULL draws to entire frame
-	 */
-
-	//Render Texture to screen
 	SDL_RenderCopy(renderer,player1, NULL, &destR);
-	//Update screen with any rendering performed in last screen
 	SDL_RenderPresent(renderer);
 
 }
@@ -135,11 +115,9 @@ void Game::eventhandler()
 	}
 }
 
-//Handles movement/game logic. For now
 void Game::update()
 {
 	i++;
-	//Use this rectangle and it's dimensions in the RenderCopy function
 	destR.h = 32;
 	destR.w = 32;
 	destR.x = i;
@@ -153,7 +131,6 @@ void Game::closeSDL()
 	renderer = NULL; 
 	SDL_DestroyTexture(player1);
 	player1 = NULL;
-	//Quit SDL subsystems
 	IMG_Quit();	
 	SDL_Quit();
 }
@@ -162,10 +139,21 @@ void Game::gameloop()
 {
 	while (currentstate != EXIT)
 	{
+		/* framestart: how many milliseconds it has been since SDL was initialised
+		 * frametime: how long it's taken handle events, update & render
+		 */
+		framestart = SDL_GetTicks();
+
 		eventhandler();
-		//Update follows events
 		update();
 		render();
+
+		frametime = SDL_GetTicks() - framestart;
+		//Delays our program to provide smoother object movement
+		if (framedelay > frametime)
+		{
+			SDL_Delay(framedelay-frametime);
+		}
 	}
 }
 
