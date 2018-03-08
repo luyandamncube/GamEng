@@ -1,7 +1,7 @@
 /**************************************************
  * File Name : Game.cpp
  * Creation Date : 02-03-2018
- * Last Modified : Wed 07 Mar 2018 08:28:19 PM SAST
+ * Last Modified : Thu 08 Mar 2018 02:34:24 PM SAST
  * Created By :		lmncube
  * https://github.com/luyandamncube
  **************************************************/
@@ -9,11 +9,17 @@
 #include "Game.h"
 #include <stdio.h>
 
+/*SDL_Rect is a simple sturct SDL_Rect destR = {x,y,h,w}
+ * Usage destR.x = 0
+ * This should all be done in an object class, we are making it global for demonstrative purposes 
+ */
+
+SDL_Rect srcR, destR;
+
 Game::Game()
 {
 	window = nullptr;
 	renderer = nullptr;
-	surface = nullptr;
 	player1 = nullptr;
 	currentstate = PLAY;
 }
@@ -38,56 +44,81 @@ bool Game::init()
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			result = false; 
 		}
-		else 
-			renderer = SDL_CreateRenderer(window, -1, 0);
+		else
+			/* Create 2D rendering context for our window (window, index, flags)
+			 * index: index of rendering driver. -1 initialises the first one
+			 * flags: four different flags or 0 for none. SDL_RENDERER_ACCELERATED lets renderer use hardware acceleration
+			 * we can use multiple flags in this parameter using "|", (ex. SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC) 
+			 */
+			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 		if (renderer == NULL)
 		{
 			printf("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
 			result = false; 
 		}
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-		surface = loadsurface("img/player.png");
-		if (surface == NULL)
-		{
-			printf("Could not load image from file! %s\n");
-			result = false;
+		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		int imgFlags = IMG_INIT_PNG; 
+		if(!( IMG_Init( imgFlags ) & imgFlags ) ) 
+		{ 
+			printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError()); 
+			result = false; 
 		}
-		else 
-		/*This HAS to be done in our init step. 
-		 * SDL_CreatTex needs direct access to it's paramters renderer and surface after they have both been initialised
-		*/
-		player1 = SDL_CreateTextureFromSurface(renderer,surface);
-		if (player1 == NULL)
-		{
-			printf("Could not create texture! %s\n");
-			result = false;
-		}
-		else
-		render();
+
 	}
 	return (result);
 }
 
+bool Game::loadmedia() 
+{ 
+	bool result = true; 
+	player1 = loadtexture( "img/player.png" );
+	if(player1 == NULL ) 
+	{ 
+		printf( "Failed to load texture image!\n" );
+		result = false; 
+	} 
+	return (result); 
+}
+
 void Game::render()
 {
+	
 	//Clear render buffer
 	SDL_RenderClear(renderer);
-	//Remember to load render objects in painters order (i.e. background first, then tilemaps, then player surfaces)
-	//RenderCopy(render to use, texture to render, source of rect to draw, where you want it drawn on screen)
-	//1st NULL draws entire image, 2nd NULL draws to entire frame
-	SDL_RenderCopy(renderer,player1, NULL, NULL);
+
+	/* Painter's Algorithm: load background -> load textures -> load objects
+	 * RenderCopy: render a texture to screen (renderer, texture, how much of image to draw, how much of frame to fill)
+	 * 1st NULL draws entire image, 2nd NULL draws to entire frame
+	 */
+
+	//Render Texture to screen
+	SDL_RenderCopy(renderer,player1, NULL, &destR);
+	//Update screen with any rendering performed in last screen
 	SDL_RenderPresent(renderer);
 
 }
 
-SDL_Surface     *Game::loadsurface(char *path)
+SDL_Texture *Game::loadtexture(char *path) 
 {
-	//Use IMGload instead of SDL_loadBMP for png images
-	SDL_Surface *temp = IMG_Load(path);
-	if (temp == NULL)
-		printf("Could not load media! SDL_Error: %s\n", SDL_GetError());
-	else
-		return (temp);
+	SDL_Texture* newTexture = NULL; 
+
+	SDL_Surface* loadedSurface = IMG_Load(path); 
+	if( loadedSurface == NULL )
+	{ 
+		printf( "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError() );
+	} 
+	else 
+	{ 
+
+		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface); 
+		if( newTexture == NULL ) 
+		{ 
+			printf( "Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError() );
+		} 
+
+		SDL_FreeSurface(loadedSurface);
+	} 
+	return (newTexture); 
 }
 
 void Game::eventhandler()
@@ -109,6 +140,9 @@ void Game::update()
 {
 	//int i = 0;
 	//i++;
+	//Use this rectangle and it's dimensions in the RenderCopy function
+	destR.h = 32;
+	destR.w = 32;
 }
 
 void Game::closeSDL()
@@ -117,8 +151,10 @@ void Game::closeSDL()
 	window = NULL;
 	SDL_DestroyRenderer(renderer);
 	renderer = NULL; 
-	SDL_FreeSurface(surface);
-	surface = NULL; 
+	SDL_DestroyTexture(player1);
+	player1 = NULL;
+	//Quit SDL subsystems
+	IMG_Quit();	
 	SDL_Quit();
 }
 
@@ -126,8 +162,10 @@ void Game::gameloop()
 {
 	while (currentstate != EXIT)
 	{
-		update();
 		eventhandler();
+		//Update follows events
+		update();
+		render();
 	}
 }
 
@@ -135,4 +173,3 @@ void Game::run()
 {
 	gameloop();
 }
-
