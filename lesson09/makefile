@@ -22,7 +22,7 @@
 #								     #
 ##############################  MACROS  ##############################
 
-NAME = 			texturemanager_SDL
+NAME = 			objects_SDL
 FILENAMES = 		Game.cpp Main.cpp TextureManager.cpp GameObject.cpp
 CC =			g++
 
@@ -63,7 +63,7 @@ $(NAME): $(OBJ)
 	@echo		Done! Type \"make run\" to run executable
 run:
 	@echo 		Running program excecutable...
-			@./texturemanager_SDL
+			@./objects_SDL
 clean:
 	@echo 		Cleaning object files...
 			@rm -f $(OBJ)
