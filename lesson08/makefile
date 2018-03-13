@@ -22,8 +22,8 @@
 #								     #
 ##############################  MACROS  ##############################
 
-NAME = 			FPScap_SDL
-FILENAMES = 		Game.cpp Main.cpp
+NAME = 			texturemanager_SDL
+FILENAMES = 		Game.cpp Main.cpp TextureManager.cpp
 CC =			g++
 
 CFLAGS = 		-Wall -Werror -Wextra -w
@@ -35,7 +35,7 @@ HDIR =			./includes
 ODIR =			obj
 SDIR = 			srcs
 
-_DEPS =			Game.h
+_DEPS =			Game.h TextureManager.h
 DEPS =			$(patsubst %,$(HDIR)/%,$(_DEPS))	        
 _OBJ = 			$(FILENAMES:.cpp=.o)  		        
  OBJ = 			$(patsubst %,$(ODIR)/%,$(_OBJ))
@@ -63,7 +63,7 @@ $(NAME): $(OBJ)
 	@echo		Done! Type \"make run\" to run executable
 run:
 	@echo 		Running program excecutable...
-			@./FPScap_SDL
+			@./texturemanager_SDL
 clean:
 	@echo 		Cleaning object files...
 			@rm -f $(OBJ)

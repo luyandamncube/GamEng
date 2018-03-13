@@ -1,12 +1,13 @@
 /**************************************************
  * File Name : Game.cpp
  * Creation Date : 02-03-2018
- * Last Modified : Thu 08 Mar 2018 06:28:02 PM SAST
+ * Last Modified : Tue 13 Mar 2018 04:56:03 PM SAST
  * Created By :		lmncube
  * https://github.com/luyandamncube
  **************************************************/
 
 #include "Game.h"
+#include "TextureManager.h"
 #include <stdio.h>
 
 SDL_Rect srcR, destR;
@@ -60,8 +61,8 @@ bool Game::init()
 
 bool Game::loadmedia() 
 { 
-	bool result = true; 
-	player1 = loadtexture("img/player.png");
+	bool result = true;
+	player1 = TextureManager::loadtexture("img/player.png", renderer);
 	if(player1 == NULL ) 
 	{ 
 		printf( "Failed to load texture image!\n" );
@@ -76,29 +77,6 @@ void Game::render()
 	SDL_RenderCopy(renderer,player1, NULL, &destR);
 	SDL_RenderPresent(renderer);
 
-}
-
-SDL_Texture *Game::loadtexture(char *path) 
-{
-	SDL_Texture* newTexture = NULL; 
-
-	SDL_Surface* loadedSurface = IMG_Load(path); 
-	if( loadedSurface == NULL )
-	{ 
-		printf( "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError() );
-	} 
-	else 
-	{ 
-
-		newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface); 
-		if( newTexture == NULL ) 
-		{ 
-			printf( "Unable to create texture from %s! SDL Error: %s\n", path, SDL_GetError() );
-		} 
-
-		SDL_FreeSurface(loadedSurface);
-	} 
-	return (newTexture); 
 }
 
 void Game::eventhandler()
